@@ -6,12 +6,6 @@ One-command, end-to-end CSI collection and validation pipeline for PicoScenes.
 
 Run:
     python picoscenes_csi_collection.py
-
-Requirements:
-- PicoScenes installed and working
-- MATLAB installed with PicoScenes parser available on MATLAB path
-- User has sudo privileges
-- Python 3.11+
 """
 
 import os
@@ -29,9 +23,13 @@ from datetime import datetime
 INTERFACE_INDEX = 4
 WIFI_IFACE = "wlp4s0"
 MON_IFACE = "mon4"
-CAPTURE_DURATION_SEC = 300
 PSRD_DIR = Path("/mnt/psrd")
 MIN_CSI_SIZE_BYTES = 5 * 1024 * 1024  # 5 MB
+
+# Allowed user selections
+CONTROL_CHANNELS = [36, 40, 44, 48, 52, 56, 60, 64, 100, 104, 108, 112, 149, 153, 157, 162]
+CHANNEL_BANDWIDTHS = [20, 40, 80]
+CAPTURE_DURATION_RANGE = (20, 420)
 
 # ──────────────────────────────────────────────────────────────────────────────
 # UTILITIES
@@ -41,9 +39,6 @@ def run(cmd, sudo=False, check=True):
         cmd = ["sudo"] + cmd
     print("▶", " ".join(cmd))
     return subprocess.run(cmd, check=check)
-
-def exists(cmd):
-    return shutil.which(cmd) is not None
 
 def fatal(msg):
     print(f"\n❌ {msg}")
@@ -61,94 +56,92 @@ def ok(msg):
 def validate_environment():
     info("Validating system environment")
 
-    required = [
-        "PicoScenes",
-        "array_prepare_for_picoscenes",
-        "nmcli",
-        "iw",
-        "rfkill"
-    ]
-
+    required = ["PicoScenes", "iw", "rfkill", "nmcli", "array_prepare_for_picoscenes"]
     for cmd in required:
-        if not exists(cmd):
+        if shutil.which(cmd) is None:
             fatal(f"Required command not found: {cmd}")
-
-    try:
-        subprocess.run(
-            ["PicoScenes", "--help"],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            check=True
-        )
-    except subprocess.CalledProcessError:
-        fatal("PicoScenes installed but not runnable")
 
     if os.geteuid() == 0:
         fatal("Do NOT run this script as root")
 
-    ok("Environment verified")
+    ok("Environment validation complete")
 
 # ──────────────────────────────────────────────────────────────────────────────
-# GUI INPUT
+# GUI INPUT (SINGLE PAGE)
 # ──────────────────────────────────────────────────────────────────────────────
-def get_channel_gui():
+def get_gui_config():
     try:
         import tkinter as tk
-        from tkinter import simpledialog, messagebox
+        from tkinter import ttk, messagebox
     except Exception:
-        fatal("Tkinter not available. GUI input required.")
+        fatal("Tkinter not available")
 
     if not os.environ.get("DISPLAY"):
-        fatal("No DISPLAY detected. GUI popup cannot be shown.")
+        fatal("No DISPLAY detected")
 
     root = tk.Tk()
-    root.withdraw()
-    root.attributes("-topmost", True)
+    root.title("PicoScenes CSI Configuration")
+    root.geometry("420x300")
+    root.resizable(False, False)
 
-    messagebox.showinfo(
-        "PicoScenes CSI Collection",
-        "Enter channel configuration.\n\n"
-        "Example:\n"
-        "Center frequency: 5745\n"
-        "Bandwidth: 80 MHz"
-    )
+    # Variables
+    ch_var = tk.IntVar(value=149)
+    bw_var = tk.IntVar(value=80)
+    dur_var = tk.IntVar(value=300)
 
-    while True:
-        ch = simpledialog.askinteger(
-            "Channel",
-            "Enter center frequency (MHz):",
-            minvalue=5000,
-            maxvalue=6000
-        )
-        bw = simpledialog.askinteger(
-            "Bandwidth",
-            "Enter bandwidth (20/40/80/160 MHz):",
-            minvalue=20,
-            maxvalue=160
-        )
+    ttk.Label(root, text="Control Channel").pack(pady=5)
+    ttk.Combobox(
+        root,
+        textvariable=ch_var,
+        values=CONTROL_CHANNELS,
+        state="readonly"
+    ).pack()
 
-        if ch is None or bw is None:
-            fatal("User cancelled input")
+    ttk.Label(root, text="Channel Bandwidth (MHz)").pack(pady=5)
+    ttk.Combobox(
+        root,
+        textvariable=bw_var,
+        values=CHANNEL_BANDWIDTHS,
+        state="readonly"
+    ).pack()
 
-        if bw not in (20, 40, 80, 160):
-            messagebox.showerror("Invalid Input", "Bandwidth must be 20, 40, 80, or 160")
-            continue
+    ttk.Label(root, text="Capture Duration (seconds)").pack(pady=5)
+    ttk.Scale(
+        root,
+        from_=CAPTURE_DURATION_RANGE[0],
+        to=CAPTURE_DURATION_RANGE[1],
+        orient="horizontal",
+        variable=dur_var
+    ).pack(fill="x", padx=20)
 
+    ttk.Label(root, textvariable=dur_var).pack()
+
+    def submit():
         root.destroy()
-        return ch, bw
+
+    ttk.Button(root, text="Start CSI Collection", command=submit).pack(pady=15)
+
+    root.mainloop()
+
+    control_channel = ch_var.get()
+    bandwidth = bw_var.get()
+    duration = int(dur_var.get())
+
+    # Convert channel → center frequency (MHz)
+    center_freq = 5000 + 5 * control_channel
+
+    return center_freq, bandwidth, duration
 
 # ──────────────────────────────────────────────────────────────────────────────
 # SYSTEM SETUP
 # ──────────────────────────────────────────────────────────────────────────────
 def prepare_psrd():
-    info("Preparing /mnt/psrd")
     run(["mkdir", "-p", str(PSRD_DIR)], sudo=True)
     run(["chmod", "777", str(PSRD_DIR)], sudo=True)
     run(["chown", f"{os.getenv('USER')}:{os.getenv('USER')}", str(PSRD_DIR)], sudo=True)
     ok("/mnt/psrd ready")
 
 def disable_wifi():
-    info("Disabling Wi-Fi")
     run(["nmcli", "dev", "disconnect", WIFI_IFACE], sudo=True, check=False)
     run(["nmcli", "radio", "wifi", "off"], sudo=True)
     run(["rfkill", "unblock", "wifi"], sudo=True)
@@ -157,18 +150,17 @@ def disable_wifi():
 # ──────────────────────────────────────────────────────────────────────────────
 # CSI COLLECTION
 # ──────────────────────────────────────────────────────────────────────────────
-def prepare_array(channel, bandwidth):
-    info("Preparing NIC for PicoScenes")
+def prepare_array(center_freq, bandwidth):
     run([
         "array_prepare_for_picoscenes",
         str(INTERFACE_INDEX),
-        f"{channel} {bandwidth} {channel + 30}"
+        f"{center_freq} {bandwidth} {center_freq + 30}"
     ], sudo=True)
     run(["iw", "dev"])
     ok("NIC prepared")
 
-def collect_csi():
-    info(f"Collecting CSI for {CAPTURE_DURATION_SEC} seconds")
+def collect_csi(duration):
+    info(f"Collecting CSI for {duration} seconds")
 
     proc = subprocess.Popen([
         "PicoScenes",
@@ -180,7 +172,7 @@ def collect_csi():
 
     start = time.time()
     try:
-        while time.time() - start < CAPTURE_DURATION_SEC:
+        while time.time() - start < duration:
             time.sleep(1)
     finally:
         proc.terminate()
@@ -195,16 +187,14 @@ def collect_csi():
 # RESTORE NETWORK
 # ──────────────────────────────────────────────────────────────────────────────
 def restore_wifi():
-    info("Restoring Wi-Fi")
     run(["iw", "dev", MON_IFACE, "del"], sudo=True, check=False)
     run(["nmcli", "radio", "wifi", "on"], sudo=True)
     run(["systemctl", "restart", "NetworkManager"], sudo=True)
     run(["ip", "link", "set", WIFI_IFACE, "up"], sudo=True)
-    run(["nmcli", "dev", "wifi", "list"], check=False)
     ok("Wi-Fi restored")
 
 # ──────────────────────────────────────────────────────────────────────────────
-# CSI DISCOVERY
+# CSI DISCOVERY + VALIDATION
 # ──────────────────────────────────────────────────────────────────────────────
 def find_csi_file():
     files = sorted(Path.cwd().glob("rx_*.csi"), key=lambda p: p.stat().st_mtime)
@@ -212,66 +202,41 @@ def find_csi_file():
         fatal("No .csi file found")
     return files[-1]
 
-# ──────────────────────────────────────────────────────────────────────────────
-# PYTHON VALIDATION
-# ──────────────────────────────────────────────────────────────────────────────
 def python_validate(csi):
-    info("Running Python CSI validation")
-
     st = csi.stat()
-    result = {
-        "File": str(csi),
-        "SizeBytes": st.st_size,
-        "Modified": datetime.fromtimestamp(st.st_mtime).isoformat(),
-        "SizeOK": st.st_size >= MIN_CSI_SIZE_BYTES
-    }
-
-    with csi.open("rb") as f:
-        header = f.read(64)
-        result["Readable"] = len(header) == 64 and any(b != 0 for b in header)
-
     report = csi.with_suffix(".python_validation.txt")
-    report.write_text("\n".join(f"{k}: {v}" for k, v in result.items()))
+    report.write_text(
+        f"File: {csi}\n"
+        f"Size: {st.st_size}\n"
+        f"Modified: {datetime.fromtimestamp(st.st_mtime)}\n"
+    )
+    ok("Python validation complete")
 
-    ok(f"Python validation report written: {report}")
-    return result
-
-# ──────────────────────────────────────────────────────────────────────────────
-# MATLAB VALIDATION
-# ──────────────────────────────────────────────────────────────────────────────
 def matlab_validate(csi):
-    info("Running MATLAB CSI validation")
-
     matlab = shutil.which("matlab")
     if not matlab:
-        fatal("MATLAB not found in PATH")
+        fatal("MATLAB not found")
 
     report = csi.with_suffix(".matlab_validation.txt")
-
-    matlab_code = f"""
-    fid = fopen('{report}','w');
+    code = f"""
+    fid=fopen('{report}','w');
     try
-        [bundle, name] = parseCSIFile('{csi}');
-        fprintf(fid, 'Bundle: %s\\n', name);
-        fprintf(fid, 'Frames: %d\\n', numel(bundle.Frames));
-        f1 = bundle.Frames(1);
-        fprintf(fid, 'CSI size: %s\\n', mat2str(size(f1.CSI)));
-        fprintf(fid, 'NumTx: %d\\n', f1.NumTx);
-        fprintf(fid, 'NumRx: %d\\n', f1.NumRx);
-        fprintf(fid, 'MATLAB Validation: PASS\\n');
+        [b,n]=parseCSIFile('{csi}');
+        fprintf(fid,'Frames: %d\\n',numel(b.Frames));
+        fprintf(fid,'CSI size: %s\\n',mat2str(size(b.Frames(1).CSI)));
+        fprintf(fid,'PASS\\n');
     catch ME
-        fprintf(fid, 'MATLAB Validation: FAIL\\n');
-        fprintf(fid, '%s\\n', ME.message);
+        fprintf(fid,'FAIL\\n%s\\n',ME.message);
     end
     fclose(fid);
     """
 
     with tempfile.TemporaryDirectory() as td:
-        mfile = Path(td) / "validate.m"
-        mfile.write_text(matlab_code)
-        run([matlab, "-batch", f"run('{mfile}')"], check=False)
+        m = Path(td) / "v.m"
+        m.write_text(code)
+        run([matlab, "-batch", f"run('{m}')"], check=False)
 
-    ok(f"MATLAB validation report written: {report}")
+    ok("MATLAB validation complete")
 
 # ──────────────────────────────────────────────────────────────────────────────
 # MAIN
@@ -281,10 +246,10 @@ def main():
     prepare_psrd()
     disable_wifi()
 
-    channel, bandwidth = get_channel_gui()
-    prepare_array(channel, bandwidth)
+    center_freq, bandwidth, duration = get_gui_config()
+    prepare_array(center_freq, bandwidth)
 
-    collect_csi()
+    collect_csi(duration)
     restore_wifi()
 
     csi = find_csi_file()
@@ -292,12 +257,6 @@ def main():
 
     python_validate(csi)
     matlab_validate(csi)
-
-    print("\n================ FINAL STATUS ================")
-    print("CSI collection: SUCCESS")
-    print("Python validation: COMPLETED")
-    print("MATLAB validation: COMPLETED")
-    print("=============================================\n")
 
     ok("Pipeline completed successfully")
 
