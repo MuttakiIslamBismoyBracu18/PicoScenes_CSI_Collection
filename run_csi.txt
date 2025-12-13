@@ -1,0 +1,32 @@
+﻿RUN CSI.M
+
+After you place csi.m somewhere on your MATLAB path and open your CSI bundle:
+open("/home/obak-b/rx_4_251203_030315.csi");
+data = rx_4_251203_030315;
+You can run:
+    • Full CSI report
+      csi(data, 'summary');
+      Shows: NumTx, NumRx, CBW, carrier frequency, sampling rate (derived from Timestamp), NumTones, etc., plus heuristic AP/STA MACs.
+    • Visualization toolkit
+      csi(data, 'plot');                 % default first ~200 frames
+      csi(data, 'plot', 'frames', 1:50); % custom frame subset
+      Plots:
+        ◦ amplitude vs subcarrier (single frame)
+        ◦ phase vs subcarrier (single frame)
+        ◦ amplitude heatmap (frames × tones)
+        ◦ phase heatmap
+    • Subcarrier frequency mapping
+      csi(data, 'subcarriers');
+      Prints a table of SubcarrierIndex → frequency offset (MHz) and optional mean-amplitude-vs-frequency plot.
+    • Export for Python
+      csi(data, 'export', 'basename', 'my_csi');
+      Produces:
+        ◦ my_csi.mat (H, Amp, Phase, subcarriers, ts_sec)
+        ◦ my_csi_H.npy (complex CSI as [N, K, 2] real/imag)
+        ◦ my_csi_Amp.npy
+        ◦ my_csi_Phase.npy
+    • Heuristic AP / STA identification
+      csi(data, 'identify_ap_sta');
+      Uses frequency of MACs in Addr3 (BSSID) and Addr1/Addr2 to guess AP vs STA.
+You can open csi.m to tweak anything (e.g., plots, export fields), but it should work out of the box with the PicoScenes structure you showed. 
+

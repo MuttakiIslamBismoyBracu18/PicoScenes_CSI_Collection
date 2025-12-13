@@ -1,0 +1,494 @@
+﻿obak-b@obakb-EQ:~$ sudo apt install iw wireless-tools default-jre -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+default-jre is already the newest version (2:1.11-72build2).
+iw is already the newest version (5.16-1build1).
+wireless-tools is already the newest version (30~pre9-13.1ubuntu4).
+0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.
+obak-b@obakb-EQ:~$ PicoScenes
+
+=====================================================================================
+
+      PicoScenes Platform - Enabling Modern Wi-Fi ISAC Research! 
+
+      Manual: https://ps.zpj.io
+      Issues: https://github.com/wifisensing/PicoScenes-Issue-Tracker/issues
+      Changelog: https://zpj.io/PicoScenes/platform-changelog
+      EULA: https://ps.zpj.io/eula.html 
+
+=====================================================================================
+
+[19:22:58.670043] [Platform] [Info ] Loading PicoScenes Platform...
+[19:22:58.758837] [License ] [Info ] Loaded license: PicoScenes License Plan -- Free License (PSLP-FL) 
+[19:22:58.759233] [License ] [Info ] [AD] Wanna explore the full caps of PicoScenes? Activate a Trial License with '--trial' option!
+[19:22:58.761717] [Platform] [Info ] PicoScenes Platform version: 2025.0922.2120
+[19:22:58.768240] [License ] [Info ] Current build will expire in -9 days.
+[19:23:15.145595] [Platform] [Warn ] Current PicoScenes build (2025.0922.2120) is expired. You should upgrade PicoScenes to the latest version.
+[19:23:15.157144] [Plugin  ] [Info ] 3 plugins are found.
+[19:23:15.286472] [Platform] [Info ] Activating supports for Wi-Fi NICs ...
+[19:23:15.299374] [Frontend] [Info ]     PicoScenes Driver (picoscenes-driver-modules-6.5.0-15-generic) is installed. [OK]
+[19:23:15.300767] [Frontend] [Info ]     Current Linux kernel version: 6.5.0-15-generic. [OK]
+[19:23:15.304521] [Frontend] [Info ]     PicoScenes Driver (ver: 20240210) is activated. [OK]
+[19:23:15.346185] [Frontend] [Warn ]     No compatible Wi-Fi COTS NIC is found.
+[19:23:15.446441] [Platform] [Info ] Activating supports for NI USRP ...
+[19:23:15.456756] [Misc    ] [Info ]     [AD] 销售NI USRP，赠PicoScenes Pro License授权，原厂质保，价格公开透明，见<https://ps.zpj.io/ni.html>
+[19:23:15.969544] [SDR     ] [Info ]     0 compatible USRP devices found.
+[19:23:15.981818] [Platform] [Info ] Activating supports for HackRF One ...
+[19:23:15.981881] [Frontend] [Info ]     0 SoapySDR compatible devices found.
+[19:23:15.981883] [Platform] [Info ]  *******  PicoScenes Platform has been launched successfully. You can press <Ctrl+C> to exit at any time.  *******
+^C
+obak-b@obakb-EQ:~$ sudo modprobe -r iwlwifi
+obak-b@obakb-EQ:~$ sudo modprobe iwlwifi-picoscenes
+modprobe: FATAL: Module iwlwifi-picoscenes not found in directory /lib/modules/6.5.0-15-generic
+obak-b@obakb-EQ:~$ lspci-nnk | grep -A3 -i network
+lspci-nnk: command not found
+obak-b@obakb-EQ:~$ array_status
+----------------------
+Device Status of Wi-Fi NIC array "all":
+PhyPath DEV PHY [MON] DEV_MacAddr [MON_MacAddr] [CF_Control] [BW] [CF] ProductName
+4 wlp4s0 phy0 Wi-Fi 6 AX200 
+----------------------
+obak-b@obakb-EQ:~$ ANY2PHY 4
+phy0
+obak-b@obakb-EQ:~$ iw dev
+obak-b@obakb-EQ:~$ iwlwifi-picoScenes missing Reinstall picoscenes-driver-modules-$(uname -r)
+iwlwifi-picoScenes: command not found
+obak-b@obakb-EQ:~$ sudo apt install iw wireless-tools
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+iw is already the newest version (5.16-1build1).
+wireless-tools is already the newest version (30~pre9-13.1ubuntu4).
+0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.
+obak-b@obakb-EQ:~$ iw dev
+obak-b@obakb-EQ:~$ array_status
+----------------------
+Device Status of Wi-Fi NIC array "all":
+PhyPath DEV PHY [MON] DEV_MacAddr [MON_MacAddr] [CF_Control] [BW] [CF] ProductName
+4 wlp4s0 phy0 Wi-Fi 6 AX200 
+----------------------
+obak-b@obakb-EQ:~$ sudo modprobe iwlwifi
+obak-b@obakb-EQ:~$ PicoScenes
+
+=====================================================================================
+
+      PicoScenes Platform - Enabling Modern Wi-Fi ISAC Research! 
+
+      Manual: https://ps.zpj.io
+      Issues: https://github.com/wifisensing/PicoScenes-Issue-Tracker/issues
+      Changelog: https://zpj.io/PicoScenes/platform-changelog
+      EULA: https://ps.zpj.io/eula.html 
+
+=====================================================================================
+
+[19:29:23.968072] [Platform] [Info ] Loading PicoScenes Platform...
+[19:29:24.054744] [License ] [Info ] Loaded license: PicoScenes License Plan -- Free License (PSLP-FL) 
+[19:29:24.054753] [License ] [Info ] [AD] Wanna explore the full caps of PicoScenes? Activate a Trial License with '--trial' option!
+[19:29:24.057159] [Platform] [Info ] PicoScenes Platform version: 2025.0922.2120
+[19:29:24.065965] [License ] [Info ] Current build will expire in -9 days.
+[19:29:30.965029] [Platform] [Warn ] Current PicoScenes build (2025.0922.2120) is expired. You should upgrade PicoScenes to the latest version.
+[19:29:30.977046] [Plugin  ] [Info ] 3 plugins are found.
+[19:29:31.103228] [Platform] [Info ] Activating supports for Wi-Fi NICs ...
+[19:29:31.116462] [Frontend] [Info ]     PicoScenes Driver (picoscenes-driver-modules-6.5.0-15-generic) is installed. [OK]
+[19:29:31.117798] [Frontend] [Info ]     Current Linux kernel version: 6.5.0-15-generic. [OK]
+[19:29:31.121568] [Frontend] [Info ]     PicoScenes Driver (ver: 20240210) is activated. [OK]
+[19:29:31.200745] [Frontend] [Info ]     1 compatible Wi-Fi COTS NICs are found.
+[19:29:31.310978] [Platform] [Info ] Activating supports for NI USRP ...
+[19:29:31.321049] [Misc    ] [Info ]     [AD] 销售NI USRP，赠PicoScenes Pro License授权，原厂质保，价格公开透明，见<https://ps.zpj.io/ni.html>
+[19:29:31.833435] [SDR     ] [Info ]     0 compatible USRP devices found.
+[19:29:31.845925] [Platform] [Info ] Activating supports for HackRF One ...
+[19:29:31.846001] [Frontend] [Info ]     0 SoapySDR compatible devices found.
+[19:29:31.846004] [Platform] [Info ]  *******  PicoScenes Platform has been launched successfully. You can press <Ctrl+C> to exit at any time.  *******
+^C
+obak-b@obakb-EQ:~$ iw dev
+phy#0
+	Interface wlp4s0
+		ifindex 5
+		wdev 0x1
+		addr ec:4c:8c:52:1f:7f
+		ssid Sony_Home
+		type managed
+		channel 36 (5180 MHz), width: 80 MHz, center1: 5210 MHz
+		txpower 22.00 dBm
+		multicast TXQ:
+			qsz-byt	qsz-pkt	flows	drops	marks	overlmt	hashcoltx-bytes	tx-packets
+			0	0	0	0	0	0	0	00
+obak-b@obakb-EQ:~$ sudo PicoScenes "-mode logger -i phy0 --CSI 1 --log csi_log.psdb" 
+CSI Log from AP
+CSI Being Decoded: sudo PicoScenes "-mode CSIBrowser -i phy0"
+CSI File Parse: PicoScenes "-mode offline -i csi_log.psdb –plot"
+CSI Collection: sudo PicoScenes "-mode logger -i phy0 --CSI 1 --BW 80MHz --channel 149 --log csi_log.psdb"
+View Results: PicoScenes "-mode offline -i csi_log.psdb –plot"
+CSI Doesn’t appear: sudo PicoScenes "-mode logger -i phy0 --debug 4"
+
+AFTER UPDATE FAILURE WHEN PICOSCENES IS NOT WORKING, RUN THESE COMMANDS
+
+obak-b@obakb-EQ:~$ sudo dpkg --purge picoscenes-platform picoscenes-all picoscenes-driver-modules-$(uname -r) picoscenes-plugins-demo-echoprobe-forwarder
+(Reading database ... 222832 files and directories currently installed.)
+Removing picoscenes-platform (2025.0922.2120) ...
+Purging configuration files for picoscenes-platform (2025.0922.2120) ...
+dpkg: warning: while removing picoscenes-platform, directory '/usr/local/share/uhd' not empty so not removed
+dpkg: warning: while removing picoscenes-platform, directory '/usr/local/lib/python3.10' not empty so not removed
+dpkg: warning: while removing picoscenes-platform, directory '/usr/local/bin' not empty so not removed
+Removing picoscenes-all (20200715) ...
+Removing picoscenes-driver-modules-6.5.0-15-generic (20240210) ...
+Purging configuration files for picoscenes-driver-modules-6.5.0-15-generic (20240210) ...
+dpkg: warning: ignoring request to remove picoscenes-plugins-demo-echoprobe-forwarder which isn't installed
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.11) ...
+obak-b@obakb-EQ:~$ sudo rm -rf /usr/local/PicoScenes
+obak-b@obakb-EQ:~$ sudo apt --fix-broken install -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  fping libqrencode4 ntpdate qrencode
+Use 'sudo apt autoremove' to remove them.
+0 upgraded, 0 newly installed, 0 to remove and 2 not upgraded.
+obak-b@obakb-EQ:~$ sudo apt autoremove -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages will be REMOVED:
+  fping libqrencode4 ntpdate qrencode
+0 upgraded, 0 newly installed, 4 to remove and 2 not upgraded.
+After this operation, 401 kB disk space will be freed.
+(Reading database ... 219720 files and directories currently installed.)
+Removing fping (5.1-1) ...
+Removing qrencode (4.1.1-1) ...
+Removing libqrencode4:amd64 (4.1.1-1) ...
+Removing ntpdate (1:4.2.8p15+dfsg-1ubuntu2) ...
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.11) ...
+obak-b@obakb-EQ:~$ sudo apt clean
+obak-b@obakb-EQ:~$ sudo rm /etc/apt/sources.list.d/picoscenes.list
+rm: cannot remove '/etc/apt/sources.list.d/picoscenes.list': No such file or directory
+obak-b@obakb-EQ:~$ sudo apt update
+Hit:1 http://us.archive.ubuntu.com/ubuntu jammy InRelease
+Hit:2 https://dl.google.com/linux/chrome/deb stable InRelease                  
+Hit:3 http://us.archive.ubuntu.com/ubuntu jammy-updates InRelease              
+Hit:4 http://us.archive.ubuntu.com/ubuntu jammy-backports InRelease            
+Hit:5 https://ppa.launchpadcontent.net/ettusresearch/uhd/ubuntu jammy InRelease
+Hit:6 http://security.ubuntu.com/ubuntu jammy-security InRelease    
+Ign:7 https://ps2204.zpj.io/PicoScenes/22.04/x86_64 stable InRelease
+Hit:8 https://ps2204.zpj.io/PicoScenes/22.04/x86_64 stable Release
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+2 packages can be upgraded. Run 'apt list --upgradable' to see them.
+W: http://us.archive.ubuntu.com/ubuntu/dists/jammy/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+W: http://us.archive.ubuntu.com/ubuntu/dists/jammy-updates/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+W: http://us.archive.ubuntu.com/ubuntu/dists/jammy-backports/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+W: https://ppa.launchpadcontent.net/ettusresearch/uhd/ubuntu/dists/jammy/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+W: http://security.ubuntu.com/ubuntu/dists/jammy-security/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+W: https://ps2204.zpj.io/PicoScenes/22.04/x86_64/dists/stable/Release.gpg: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+obak-b@obakb-EQ:~$ sudo apt list --upgradable
+Listing... Done
+linux-libc-dev/jammy-updates 5.15.0-163.173 amd64 [upgradable from: 5.15.0-161.171]
+linux-tools-common/jammy-updates,jammy-updates 5.15.0-163.173 all [upgradable from: 5.15.0-161.171]
+obak-b@obakb-EQ:~$ grep -R "PicoScenes" /etc/apt/sources.list.d
+/etc/apt/sources.list.d/archive_uri-https_ps2204_zpj_io_picoscenes_22_04_x86_64-jammy.list.save:deb [arch=amd64] https://ps2204.zpj.io/PicoScenes/22.04/x86_64 stable main avx2
+/etc/apt/sources.list.d/archive_uri-https_ps2204_zpj_io_picoscenes_22_04_x86_64-jammy.list.save:# deb-src [arch=amd64] https://ps2204.zpj.io/PicoScenes/22.04/x86_64 stable main avx2
+/etc/apt/sources.list.d/archive_uri-https_ps2204_zpj_io_picoscenes_22_04_x86_64-jammy.list:deb [arch=amd64] https://ps2204.zpj.io/PicoScenes/22.04/x86_64 stable avx2 main
+/etc/apt/sources.list.d/archive_uri-https_ps2204_zpj_io_picoscenes_22_04_x86_64-jammy.list:# deb-src [arch=amd64] https://ps2204.zpj.io/PicoScenes/22.04/x86_64 stable avx2 main
+obak-b@obakb-EQ:~$ sudo apt update
+Hit:1 http://us.archive.ubuntu.com/ubuntu jammy InRelease                      
+Hit:2 https://dl.google.com/linux/chrome/deb stable InRelease                  
+Hit:3 http://us.archive.ubuntu.com/ubuntu jammy-updates InRelease              
+Hit:4 http://security.ubuntu.com/ubuntu jammy-security InRelease               
+Hit:5 http://us.archive.ubuntu.com/ubuntu jammy-backports InRelease            
+Hit:6 https://ppa.launchpadcontent.net/ettusresearch/uhd/ubuntu jammy InRelease
+Ign:7 https://ps2204.zpj.io/PicoScenes/22.04/x86_64 stable InRelease
+Hit:8 https://ps2204.zpj.io/PicoScenes/22.04/x86_64 stable Release
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+2 packages can be upgraded. Run 'apt list --upgradable' to see them.
+W: http://us.archive.ubuntu.com/ubuntu/dists/jammy/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+W: http://us.archive.ubuntu.com/ubuntu/dists/jammy-updates/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+W: http://security.ubuntu.com/ubuntu/dists/jammy-security/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+W: http://us.archive.ubuntu.com/ubuntu/dists/jammy-backports/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+W: https://ppa.launchpadcontent.net/ettusresearch/uhd/ubuntu/dists/jammy/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+W: https://ps2204.zpj.io/PicoScenes/22.04/x86_64/dists/stable/Release.gpg: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+obak-b@obakb-EQ:~$ sudo apt install picoscenes-platform
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  fping libqrencode4 ntpdate picoscenes-driver-modules-6.5.0-15-generic
+  qrencode
+The following NEW packages will be installed:
+  fping libqrencode4 ntpdate picoscenes-driver-modules-6.5.0-15-generic
+  picoscenes-platform qrencode
+0 upgraded, 6 newly installed, 0 to remove and 2 not upgraded.
+Need to get 59.2 MB of archives.
+After this operation, 27.1 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://us.archive.ubuntu.com/ubuntu jammy/universe amd64 fping amd64 5.1-1 [32.0 kB]
+Get:2 http://us.archive.ubuntu.com/ubuntu jammy/universe amd64 libqrencode4 amd64 4.1.1-1 [24.0 kB]
+Get:3 http://us.archive.ubuntu.com/ubuntu jammy/universe amd64 ntpdate amd64 1:4.2.8p15+dfsg-1ubuntu2 [51.5 kB]
+Get:4 http://us.archive.ubuntu.com/ubuntu jammy/universe amd64 qrencode amd64 4.1.1-1 [25.2 kB]
+Get:5 https://ps2204.zpj.io/PicoScenes/22.04/x86_64 stable/main amd64 picoscenes-driver-modules-6.5.0-15-generic amd64 20240210 [1,123 kB]
+Get:6 https://ps2204.zpj.io/PicoScenes/22.04/x86_64 stable/avx2 amd64 picoscenes-platform amd64 2025.0922.2120 [58.0 MB]
+Fetched 59.2 MB in 1min 45s (565 kB/s)                                         
+Preconfiguring packages ...
+Selecting previously unselected package fping.
+(Reading database ... 219688 files and directories currently installed.)
+Preparing to unpack .../0-fping_5.1-1_amd64.deb ...
+Unpacking fping (5.1-1) ...
+Selecting previously unselected package libqrencode4:amd64.
+Preparing to unpack .../1-libqrencode4_4.1.1-1_amd64.deb ...
+Unpacking libqrencode4:amd64 (4.1.1-1) ...
+Selecting previously unselected package ntpdate.
+Preparing to unpack .../2-ntpdate_1%3a4.2.8p15+dfsg-1ubuntu2_amd64.deb ...
+Unpacking ntpdate (1:4.2.8p15+dfsg-1ubuntu2) ...
+Selecting previously unselected package picoscenes-driver-modules-6.5.0-15-gener
+ic.
+Preparing to unpack .../3-picoscenes-driver-modules-6.5.0-15-generic_20240210_am
+d64.deb ...
+Unpacking picoscenes-driver-modules-6.5.0-15-generic (20240210) ...
+Selecting previously unselected package qrencode.
+Preparing to unpack .../4-qrencode_4.1.1-1_amd64.deb ...
+Unpacking qrencode (4.1.1-1) ...
+Selecting previously unselected package picoscenes-platform.
+Preparing to unpack .../5-picoscenes-platform_2025.0922.2120_amd64.deb ...
+Unpacking picoscenes-platform (2025.0922.2120) ...
+Setting up libqrencode4:amd64 (4.1.1-1) ...
+Setting up qrencode (4.1.1-1) ...
+Setting up ntpdate (1:4.2.8p15+dfsg-1ubuntu2) ...
+Setting up picoscenes-driver-modules-6.5.0-15-generic (20240210) ...
+Setting up fping (5.1-1) ...
+Setting up picoscenes-platform (2025.0922.2120) ...
+Configuring library path for PicoScenes...
+UHD images already exist, skipping download.
+Installing uhd-usrp.rules...
+
+-------------------------------------------------------
+PicoScenes Platform has been successfully installed.
+View documentation at https://ps.zpj.io
+-------------------------------------------------------
+
+Processing triggers for libc-bin (2.35-0ubuntu3.11) ...
+Processing triggers for man-db (2.10.2-1) ...
+obak-b@obakb-EQ:~$ sudo apt install picoscenes-driver-modules-$(uname -r)
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+picoscenes-driver-modules-6.5.0-15-generic is already the newest version (20240210).
+picoscenes-driver-modules-6.5.0-15-generic set to manually installed.
+0 upgraded, 0 newly installed, 0 to remove and 2 not upgraded.
+obak-b@obakb-EQ:~$ dpkg -l | grep picoscenes
+ii  picoscenes-driver-modules-6.5.0-15-generic 20240210                                amd64        PicoScenes Driver
+ii  picoscenes-platform                        2025.0922.2120                          amd64        PicoScenes Platform
+ii  picoscenes-source-updater                  1.3                                     amd64        PicoScenes-source-updater
+obak-b@obakb-EQ:~$ sudo dmesg | grep -i picoscenes
+[ 1764.681369] audit: type=1400 audit(1764722018.990:69): apparmor="DENIED" operation="file_mmap" class="file" profile="/usr/lib/snapd/snap-confine" name="/usr/local/PicoScenes/pslib/libudev.so.1.7.2" pid=12257 comm="snap-confine" requested_mask="m" denied_mask="m" fsuid=1000 ouid=1000
+[ 2011.187182] audit: type=1400 audit(1764722265.514:70): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_apt_news" name="/usr/local/PicoScenes/pslib/libm.so.6" pid=12597 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2011.187268] audit: type=1400 audit(1764722265.514:71): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_apt_news" name="/usr/local/PicoScenes/pslib/libexpat.so.1.8.7" pid=12597 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2011.187327] audit: type=1400 audit(1764722265.514:72): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_apt_news" name="/usr/local/PicoScenes/pslib/libz.so.1.2.11" pid=12597 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2011.187397] audit: type=1400 audit(1764722265.514:73): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_apt_news" name="/usr/local/PicoScenes/pslib/libc.so.6" pid=12597 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2011.189493] audit: type=1400 audit(1764722265.514:74): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache" name="/usr/local/PicoScenes/pslib/libm.so.6" pid=12598 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2011.189598] audit: type=1400 audit(1764722265.514:75): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache" name="/usr/local/PicoScenes/pslib/libexpat.so.1.8.7" pid=12598 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2011.189671] audit: type=1400 audit(1764722265.514:76): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache" name="/usr/local/PicoScenes/pslib/libz.so.1.2.11" pid=12598 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2011.189747] audit: type=1400 audit(1764722265.514:77): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache" name="/usr/local/PicoScenes/pslib/libc.so.6" pid=12598 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2011.206682] audit: type=1400 audit(1764722265.534:78): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_apt_news" name="/usr/local/PicoScenes/pslib/libbz2.so.1.0.4" pid=12597 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2011.207150] audit: type=1400 audit(1764722265.534:79): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_apt_news" name="/usr/local/PicoScenes/pslib/liblzma.so.5.2.5" pid=12597 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2040.856031] audit: type=1400 audit(1764722295.179:310): apparmor="ALLOWED" operation="open" class="file" profile="libreoffice-oosplash" name="/usr/local/PicoScenes/pslib/libX11.so.6.4.0" pid=13254 comm="oosplash" requested_mask="r" denied_mask="r" fsuid=1000 ouid=1000
+[ 2040.856038] audit: type=1400 audit(1764722295.179:311): apparmor="ALLOWED" operation="file_mmap" class="file" profile="libreoffice-oosplash" name="/usr/local/PicoScenes/pslib/libX11.so.6.4.0" pid=13254 comm="oosplash" requested_mask="rm" denied_mask="rm" fsuid=1000 ouid=1000
+[ 2040.856763] audit: type=1400 audit(1764722295.183:312): apparmor="ALLOWED" operation="open" class="file" profile="libreoffice-oosplash" name="/usr/local/PicoScenes/pslib/libc.so.6" pid=13254 comm="oosplash" requested_mask="r" denied_mask="r" fsuid=1000 ouid=1000
+[ 2040.856788] audit: type=1400 audit(1764722295.183:313): apparmor="ALLOWED" operation="file_mmap" class="file" profile="libreoffice-oosplash" name="/usr/local/PicoScenes/pslib/libc.so.6" pid=13254 comm="oosplash" requested_mask="rm" denied_mask="rm" fsuid=1000 ouid=1000
+[ 2040.856914] audit: type=1400 audit(1764722295.183:314): apparmor="ALLOWED" operation="open" class="file" profile="libreoffice-oosplash" name="/usr/local/PicoScenes/pslib/libxcb.so.1.1.0" pid=13254 comm="oosplash" requested_mask="r" denied_mask="r" fsuid=1000 ouid=1000
+[ 2040.856931] audit: type=1400 audit(1764722295.183:315): apparmor="ALLOWED" operation="file_mmap" class="file" profile="libreoffice-oosplash" name="/usr/local/PicoScenes/pslib/libxcb.so.1.1.0" pid=13254 comm="oosplash" requested_mask="rm" denied_mask="rm" fsuid=1000 ouid=1000
+[ 2040.856978] audit: type=1400 audit(1764722295.183:316): apparmor="ALLOWED" operation="open" class="file" profile="libreoffice-oosplash" name="/usr/local/PicoScenes/pslib/libz.so.1.2.11" pid=13254 comm="oosplash" requested_mask="r" denied_mask="r" fsuid=1000 ouid=1000
+[ 2040.857003] audit: type=1400 audit(1764722295.183:317): apparmor="ALLOWED" operation="file_mmap" class="file" profile="libreoffice-oosplash" name="/usr/local/PicoScenes/pslib/libz.so.1.2.11" pid=13254 comm="oosplash" requested_mask="rm" denied_mask="rm" fsuid=1000 ouid=1000
+[ 2040.857047] audit: type=1400 audit(1764722295.183:318): apparmor="ALLOWED" operation="open" class="file" profile="libreoffice-oosplash" name="/usr/local/PicoScenes/pslib/libm.so.6" pid=13254 comm="oosplash" requested_mask="r" denied_mask="r" fsuid=1000 ouid=1000
+[ 2040.857067] audit: type=1400 audit(1764722295.183:319): apparmor="ALLOWED" operation="file_mmap" class="file" profile="libreoffice-oosplash" name="/usr/local/PicoScenes/pslib/libm.so.6" pid=13254 comm="oosplash" requested_mask="rm" denied_mask="rm" fsuid=1000 ouid=1000
+[ 2485.435419] audit: type=1400 audit(1764722739.787:438): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_apt_news" name="/usr/local/PicoScenes/pslib/libm.so.6" pid=13963 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2485.435495] audit: type=1400 audit(1764722739.787:439): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_apt_news" name="/usr/local/PicoScenes/pslib/libexpat.so.1.8.7" pid=13963 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2485.435554] audit: type=1400 audit(1764722739.787:440): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_apt_news" name="/usr/local/PicoScenes/pslib/libz.so.1.2.11" pid=13963 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2485.435618] audit: type=1400 audit(1764722739.787:441): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_apt_news" name="/usr/local/PicoScenes/pslib/libc.so.6" pid=13963 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2485.436844] audit: type=1400 audit(1764722739.787:442): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache" name="/usr/local/PicoScenes/pslib/libm.so.6" pid=13964 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2485.436953] audit: type=1400 audit(1764722739.791:443): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache" name="/usr/local/PicoScenes/pslib/libexpat.so.1.8.7" pid=13964 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2485.437016] audit: type=1400 audit(1764722739.791:444): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache" name="/usr/local/PicoScenes/pslib/libz.so.1.2.11" pid=13964 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2485.437079] audit: type=1400 audit(1764722739.791:445): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache" name="/usr/local/PicoScenes/pslib/libc.so.6" pid=13964 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2485.457423] audit: type=1400 audit(1764722739.811:446): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_apt_news" name="/usr/local/PicoScenes/pslib/libbz2.so.1.0.4" pid=13963 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2485.457882] audit: type=1400 audit(1764722739.811:447): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_apt_news" name="/usr/local/PicoScenes/pslib/liblzma.so.5.2.5" pid=13963 comm="python3" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2494.706417] audit: type=1400 audit(1764722749.060:510): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache//apt_methods_gpgv" name="/usr/local/PicoScenes/pslib/libstdc++.so.6.0.30" pid=14402 comm="gpgv" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2494.706760] audit: type=1400 audit(1764722749.060:511): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache//apt_methods_gpgv" name="/usr/local/PicoScenes/pslib/libgcc_s.so.1" pid=14402 comm="gpgv" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2494.706766] audit: type=1400 audit(1764722749.060:512): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache//apt_methods_gpgv" name="/usr/local/PicoScenes/pslib/libc.so.6" pid=14402 comm="gpgv" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2494.706770] audit: type=1400 audit(1764722749.060:513): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache//apt_methods_gpgv" name="/usr/local/PicoScenes/pslib/libz.so.1.2.11" pid=14402 comm="gpgv" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2494.706774] audit: type=1400 audit(1764722749.060:514): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache//apt_methods_gpgv" name="/usr/local/PicoScenes/pslib/libbz2.so.1.0.4" pid=14402 comm="gpgv" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2494.706841] audit: type=1400 audit(1764722749.060:515): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache//apt_methods_gpgv" name="/usr/local/PicoScenes/pslib/liblzma.so.5.2.5" pid=14402 comm="gpgv" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2494.706911] audit: type=1400 audit(1764722749.060:516): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache//apt_methods_gpgv" name="/usr/local/PicoScenes/pslib/liblz4.so.1.9.3" pid=14402 comm="gpgv" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2494.706986] audit: type=1400 audit(1764722749.060:517): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache//apt_methods_gpgv" name="/usr/local/PicoScenes/pslib/libzstd.so.1.4.8" pid=14402 comm="gpgv" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2494.707055] audit: type=1400 audit(1764722749.060:518): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache//apt_methods_gpgv" name="/usr/local/PicoScenes/pslib/libudev.so.1.7.2" pid=14402 comm="gpgv" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2494.707317] audit: type=1400 audit(1764722749.060:519): apparmor="DENIED" operation="open" class="file" profile="ubuntu_pro_esm_cache//apt_methods_gpgv" name="/usr/local/PicoScenes/pslib/libm.so.6" pid=14402 comm="gpgv" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[ 2694.823377] audit: type=1400 audit(1764722949.188:678): apparmor="DENIED" operation="open" class="file" profile="/usr/bin/evince" name="/usr/local/PicoScenes/pslib/libm.so.6" pid=15518 comm="evince" requested_mask="r" denied_mask="r" fsuid=1000 ouid=1000
+[ 2694.823519] audit: type=1400 audit(1764722949.188:679): apparmor="DENIED" operation="open" class="file" profile="/usr/bin/evince" name="/usr/local/PicoScenes/pslib/libc.so.6" pid=15518 comm="evince" requested_mask="r" denied_mask="r" fsuid=1000 ouid=1000
+[ 2694.824493] audit: type=1400 audit(1764722949.192:680): apparmor="DENIED" operation="open" class="file" profile="/usr/bin/evince" name="/usr/local/PicoScenes/pslib/libffi.so.8.1.0" pid=15518 comm="evince" requested_mask="r" denied_mask="r" fsuid=1000 ouid=1000
+[ 2694.824729] audit: type=1400 audit(1764722949.192:681): apparmor="DENIED" operation="open" class="file" profile="/usr/bin/evince" name="/usr/local/PicoScenes/pslib/libudev.so.1.7.2" pid=15518 comm="evince" requested_mask="r" denied_mask="r" fsuid=1000 ouid=1000
+[ 2694.824845] audit: type=1400 audit(1764722949.192:682): apparmor="DENIED" operation="open" class="file" profile="/usr/bin/evince" name="/usr/local/PicoScenes/pslib/libX11.so.6.4.0" pid=15518 comm="evince" requested_mask="r" denied_mask="r" fsuid=1000 ouid=1000
+[ 2694.826003] audit: type=1400 audit(1764722949.192:683): apparmor="DENIED" operation="open" class="file" profile="/usr/bin/evince" name="/usr/local/PicoScenes/pslib/libxcb.so.1.1.0" pid=15518 comm="evince" requested_mask="r" denied_mask="r" fsuid=1000 ouid=1000
+[ 2694.826179] audit: type=1400 audit(1764722949.192:684): apparmor="DENIED" operation="open" class="file" profile="/usr/bin/evince" name="/usr/local/PicoScenes/pslib/libz.so.1.2.11" pid=15518 comm="evince" requested_mask="r" denied_mask="r" fsuid=1000 ouid=1000
+[ 2694.826800] audit: type=1400 audit(1764722949.192:685): apparmor="DENIED" operation="open" class="file" profile="/usr/bin/evince" name="/usr/local/PicoScenes/pslib/liblzma.so.5.2.5" pid=15518 comm="evince" requested_mask="r" denied_mask="r" fsuid=1000 ouid=1000
+[ 2694.826867] audit: type=1400 audit(1764722949.192:686): apparmor="DENIED" operation="open" class="file" profile="/usr/bin/evince" name="/usr/local/PicoScenes/pslib/libzstd.so.1.4.8" pid=15518 comm="evince" requested_mask="r" denied_mask="r" fsuid=1000 ouid=1000
+[ 2694.826948] audit: type=1400 audit(1764722949.192:687): apparmor="DENIED" operation="open" class="file" profile="/usr/bin/evince" name="/usr/local/PicoScenes/pslib/liblz4.so.1.9.3" pid=15518 comm="evince" requested_mask="r" denied_mask="r" fsuid=1000 ouid=1000
+[15948.320038] traps: PicoScenes[19773] general protection fault ip:7fc48a22aa1a sp:7fc302fbcfb0 error:0 in libSystemTools.so[7fc48a1fe000+e5000]
+[15960.111879] traps: PicoScenes[20155] general protection fault ip:7ff31b756a1a sp:7ff1217e9fb0 error:0 in libSystemTools.so[7ff31b72a000+e5000]
+[16597.880192] PicoScenes[21977]: segfault at 18 ip 00007f432109a64c sp 00007f41e56e9840 error 4 in libc.so.6[7f4321028000+195000] likely on CPU 5 (core 2, socket 0)
+[17752.450822] audit: type=1400 audit(1764738008.248:724): apparmor="DENIED" operation="open" class="file" profile="/usr/sbin/cups-browsed" name="/usr/local/PicoScenes/pslib/libc.so.6" pid=29542 comm="cups-browsed" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[17752.450923] audit: type=1400 audit(1764738008.248:725): apparmor="DENIED" operation="open" class="file" profile="/usr/sbin/cups-browsed" name="/usr/local/PicoScenes/pslib/libgssapi_krb5.so.2.2" pid=29542 comm="cups-browsed" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[17752.450990] audit: type=1400 audit(1764738008.248:726): apparmor="DENIED" operation="open" class="file" profile="/usr/sbin/cups-browsed" name="/usr/local/PicoScenes/pslib/libgnutls.so.30.31.0" pid=29542 comm="cups-browsed" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[17752.451061] audit: type=1400 audit(1764738008.248:727): apparmor="DENIED" operation="open" class="file" profile="/usr/sbin/cups-browsed" name="/usr/local/PicoScenes/pslib/libz.so.1.2.11" pid=29542 comm="cups-browsed" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[17752.451127] audit: type=1400 audit(1764738008.248:728): apparmor="DENIED" operation="open" class="file" profile="/usr/sbin/cups-browsed" name="/usr/local/PicoScenes/pslib/libm.so.6" pid=29542 comm="cups-browsed" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[17752.451395] audit: type=1400 audit(1764738008.248:729): apparmor="DENIED" operation="open" class="file" profile="/usr/sbin/cups-browsed" name="/usr/local/PicoScenes/pslib/libffi.so.8.1.0" pid=29542 comm="cups-browsed" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[17752.451652] audit: type=1400 audit(1764738008.248:730): apparmor="DENIED" operation="open" class="file" profile="/usr/sbin/cups-browsed" name="/usr/local/PicoScenes/pslib/libkrb5.so.3.3" pid=29542 comm="cups-browsed" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[17752.451724] audit: type=1400 audit(1764738008.248:731): apparmor="DENIED" operation="open" class="file" profile="/usr/sbin/cups-browsed" name="/usr/local/PicoScenes/pslib/libk5crypto.so.3.1" pid=29542 comm="cups-browsed" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[17752.451791] audit: type=1400 audit(1764738008.248:732): apparmor="DENIED" operation="open" class="file" profile="/usr/sbin/cups-browsed" name="/usr/local/PicoScenes/pslib/libcom_err.so.2.1" pid=29542 comm="cups-browsed" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+[17752.451851] audit: type=1400 audit(1764738008.248:733): apparmor="DENIED" operation="open" class="file" profile="/usr/sbin/cups-browsed" name="/usr/local/PicoScenes/pslib/libkrb5support.so.0.1" pid=29542 comm="cups-browsed" requested_mask="r" denied_mask="r" fsuid=0 ouid=1000
+obak-b@obakb-EQ:~$ PicoScenes
+
+=====================================================================================
+
+      PicoScenes Platform - Enabling Modern Wi-Fi ISAC Research! 
+
+      Manual: https://ps.zpj.io
+      Issues: https://github.com/wifisensing/PicoScenes-Issue-Tracker/issues
+      Changelog: https://zpj.io/PicoScenes/platform-changelog
+      EULA: https://ps.zpj.io/eula.html 
+
+=====================================================================================
+
+[00:00:26.764380] [Platform] [Info ] Loading PicoScenes Platform...
+
+[00:00:26.856311] [Platform] [Warn ] PicoScenes crashes at the very early stage due to the following error:
+------------------------------------
+
+Don't worry! ^_^ This is a scheduled crash if you have just installed PicoScenes.
+
+------------------------------------
+You may seek technical support by:
+1. viewing the Troubleshooting page of PicoScenes Documentation <https://ps.zpj.io/troubleshooting.html>, or
+2. issuing a question on the PicoScenes Issue Tracker <https://github.com/wifisensing/PicoScenes-Issue-Tracker/issues>, or
+3. run PicoScenes repair script "RepairPicoScenes", or
+4. (for PSLP-Pro license user only) contacting PicoScenes Technical Support on WeChat.
+
+obak-b@obakb-EQ:~$ PicoScenes
+
+=====================================================================================
+
+      PicoScenes Platform - Enabling Modern Wi-Fi ISAC Research! 
+
+      Manual: https://ps.zpj.io
+      Issues: https://github.com/wifisensing/PicoScenes-Issue-Tracker/issues
+      Changelog: https://zpj.io/PicoScenes/platform-changelog
+      EULA: https://ps.zpj.io/eula.html 
+
+=====================================================================================
+
+[00:00:30.658025] [Platform] [Info ] Loading PicoScenes Platform...
+[00:00:30.741885] [License ] [Info ] Loaded license: PicoScenes License Plan -- Free License (PSLP-FL) 
+[00:00:30.741894] [License ] [Info ] [AD] Wanna explore the full caps of PicoScenes? Activate a Trial License with '--trial' option!
+[00:00:30.745268] [Platform] [Info ] PicoScenes Platform version: 2025.0922.2120
+[00:00:30.754274] [License ] [Info ] Current build will expire in -9 days.
+[00:00:33.047045] [Platform] [Warn ] Current PicoScenes build (2025.0922.2120) is expired. You should upgrade PicoScenes to the latest version.
+[00:00:33.059394] [Plugin  ] [Info ] 3 plugins are found.
+[00:00:33.188612] [Platform] [Info ] Activating supports for Wi-Fi NICs ...
+[00:00:33.202050] [Frontend] [Info ]     PicoScenes Driver (picoscenes-driver-modules-6.5.0-15-generic) is installed. [OK]
+[00:00:33.203358] [Frontend] [Info ]     Current Linux kernel version: 6.5.0-15-generic. [OK]
+[00:00:33.207291] [Frontend] [Info ]     PicoScenes Driver (ver: 20240210) is activated. [OK]
+[00:00:33.291559] [Frontend] [Info ]     1 compatible Wi-Fi COTS NICs are found.
+[00:00:33.402181] [Platform] [Info ] Activating supports for NI USRP ...
+[00:00:33.412662] [Misc    ] [Info ]     [AD] 销售NI USRP，赠PicoScenes Pro License授权，原厂质保，价格公开透明，见<https://ps.zpj.io/ni.html>
+[00:00:33.926108] [SDR     ] [Info ]     0 compatible USRP devices found.
+[00:00:33.938792] [Platform] [Info ] Activating supports for HackRF One ...
+[00:00:33.938865] [Frontend] [Info ]     0 SoapySDR compatible devices found.
+[00:00:33.938873] [Platform] [Info ]  *******  PicoScenes Platform has been launched successfully. You can press <Ctrl+C> to exit at any time.  *******		
+
+Install Missing Tools
+
+sudo apt install linux-tools-common linux-tools-generic -y
+sudo apt install net-tools -y
+sudo apt install cpufrequtils -y
+
+obak-b@obakb-EQ:~$ sudo mkdir -p /mnt/psrd
+obak-b@obakb-EQ:~$ sudo chmod 777 /mnt/psrd
+obak-b@obakb-EQ:~$ sudo chown $USER:$USER /mnt/psrd
+obak-b@obakb-EQ:~$ ls -ld /mnt/psrd
+drwxrwxrwx 2 obak-b obak-b 100 Dec  3 00:00 /mnt/psrd
+
+obak-b@obakb-EQ:~$ sudo nmcli dev disconnect wlp4s0
+Device 'wlp4s0' successfully disconnected.
+obak-b@obakb-EQ:~$ sudo nmcli radio wifi off
+obak-b@obakb-EQ:~$ sudo rfkill unblock wifi
+obak-b@obakb-EQ:~$ rfkill list
+0: hci0: Bluetooth
+	Soft blocked: no
+	Hard blocked: no
+4: phy0: Wireless LAN
+	Soft blocked: no
+	Hard blocked: no
+
+obak-b@obakb-EQ:~$ sudo array_prepare_for_picoscenes 4 "5745 80 5775"
+Attempt changing CPU frequency governor to performance ...
+Un-managing NICs from Network-Manager ...
+Unlocking RF-Kill...
+Disabling power management...
+Disconnecting Wi-Fi...
+Stopping monitor interfaces...
+Changing MAC address...
+Adding monitor interfaces...
+Adding a monitor interface for phy0 (phy0), named mon4 ...
+Changing working frequency to 5745 80 5775 ...
+Preparation is done.
+----------------------
+Device Status of Wi-Fi NIC array "all":
+PhyPath DEV PHY [MON] DEV_MacAddr [MON_MacAddr] [CF_Control] [BW] [CF] ProductName
+4 wlp4s0 phy0 mon4 00:16:ea:12:34:56 ec:4c:8c:52:1f:7f 5745 80 5775 Wi-Fi 6 AX200 
+----------------------
+obak-b@obakb-EQ:~$ iw dev
+phy#0
+	Interface mon4
+		ifindex 9
+		wdev 0x2
+		addr ec:4c:8c:52:1f:7f
+		type monitor
+		channel 149 (5745 MHz), width: 80 MHz, center1: 5775 MHz
+		txpower 0.00 dBm
+	Interface wlp4s0
+		ifindex 8
+		wdev 0x1
+		addr 00:16:ea:12:34:56
+		type managed
+		txpower 22.00 dBm
+		multicast TXQ:
+			qsz-byt	qsz-pkt	flows	drops	marks	overlmt	hashcoltx-bytes	tx-packets
+			0	0	0	0	0	0	0	00
+
+PicoScenes "-d debug -i 4 --mode logger --plot"
+
+All commands in one block
+Copy-paste when you're done collecting CSI:
+sudo iw dev mon4 del
+sudo nmcli radio wifi on
+sudo systemctl restart NetworkManager
+sudo ip link set wlp4s0 up
+nmcli dev wifi list
+Then connect to your Wi-Fi:
+nmcli dev wifi connect "Sony_Home" password "torbaap@2024"
+Check File:
+obak-b@obakb-EQ:~$ ls -lh rx_4_251203_011329.csi
+-rw-rw-r-- 1 obak-b obak-b 494M Dec  3 01:16 rx_4_251203_011329.csi
+In MATLAB:
+Go to /home/obak-b/PicoScenes-MATLAB-Toolbox-Core
+Command Window:
+>> compileRXSParser
+Compiling the MATLAB parser for PicoScenes .csi file ...
+Compilation done!
+>> open("/home/obak-b/rx_4_251203_020130.csi")
+Start parsing PicoScenes CSI file: rx_4_251203_020130.csi
+uiimport("/home/obak-b/rx_4_251203_020130.csi")
+182197 PicoScenes frames are decoded in 23.704 seconds.
+rx_4_251203_020130
+
